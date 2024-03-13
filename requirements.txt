@@ -1,0 +1,11 @@
+ipykernel==6.29.3
+ipywidgets==8.1.2
+jupyterlab==4.1.4
+jupyterlab-dash==0.1.0a3
+matplotlib==3.8.3
+numpy==1.26.4
+pandas==2.2.1
+python==3.12.2
+scikit-learn==1.4.1
+seaborn==0.13.2
+xgboost==2.0.3
