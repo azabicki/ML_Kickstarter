@@ -11,6 +11,7 @@ def report(
     y_test, y_test_pred, y_train=None, y_train_pred=None, model=None, term=False
 ):
     line = "-" * 15
+    cmap = sns.light_palette("seagreen", as_cmap=True)
 
     # model infos
     if model is not None:
@@ -77,24 +78,27 @@ def report(
             )
 
     # confusion matrix
-    if y_train is not None:
-        cfmat_train = pd.crosstab(
-            y_train, y_train_pred, rownames=["Actual"], colnames=["Predicted"]
-        )
-    cfmat_test = pd.crosstab(
-        y_test, y_test_pred, rownames=["Actual"], colnames=["Predicted"]
-    )
     if term:
+        # if results should be printed in terminal
+        # training set
         if y_train is not None:
+            cfmat_train = pd.crosstab(
+                y_train, y_train_pred, rownames=["Actual"], colnames=["Predicted"]
+            )
             print(line + " confusion matrix for Train " + line)
             print(cfmat_train)
+
+        # test set
+        cfmat_test = pd.crosstab(
+            y_test, y_test_pred, rownames=["Actual"], colnames=["Predicted"]
+        )
         print(line + " confusion matrix for Test " + line)
         print(cfmat_test)
     else:
-        cmap = sns.light_palette("seagreen", as_cmap=True)
-
         # Plot confusion matrices
         plt.figure(figsize=(10, 4))
+
+        # train set
         if y_train is not None:
             plt.subplot(1, 2, 1)
             sns.heatmap(
@@ -104,6 +108,7 @@ def report(
             plt.xlabel("Predicted")
             plt.ylabel("Actual")
 
+        # test set
         plt.subplot(1, 2, 2)
         sns.heatmap(
             confusion_matrix(y_test, y_test_pred), annot=True, cmap=cmap, fmt="g"
@@ -111,11 +116,9 @@ def report(
         plt.title("Confusion Matrix for Test")
         plt.xlabel("Predicted")
         plt.ylabel("Actual")
+
         plt.tight_layout()
-
         plt.show()
-
-    # ConfusionMatrixDisplay(y_train, y_train_pred)
 
     # classification report
     if y_train is not None:
