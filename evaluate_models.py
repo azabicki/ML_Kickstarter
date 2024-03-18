@@ -139,5 +139,8 @@ def report(
     if y_train is not None:
         print(line + " classification report for Train " + line)
         print(classification_report(y_train, y_train_pred, digits=3))
-    print(line + " classification report for Test " + line)
-    print(classification_report(y_test, y_test_pred, digits=3))
+        print(f"F(0.5) - score: {fbeta_score(y_train, y_train_pred, beta=0.5):.3f}")
+    if y_test is not None:
+        print(line + " classification report for Test " + line)
+        print(classification_report(y_test, y_test_pred, digits=3))
+        print(f"F(0.5) - score: {fbeta_score(y_test, y_test_pred, beta=0.5):.3f}")
