@@ -1,10 +1,40 @@
 # --------------------------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
+import os
+import pickle
 import pprint
 import numpy as np
-import pandas as pd
 from matplotlib import pyplot as plt
 import seaborn as sns
 from sklearn.metrics import classification_report, confusion_matrix
+from sklearn.metrics import fbeta_score
+
+
+# --------------------------------------------------------------------------------------------------
+def save_model(m, f):
+    path = os.path.join('models', f'{f}')
+    filename, extension = os.path.splitext(path)
+    counter = 1
+
+    while os.path.exists(path):
+        path = filename + "_" + str(counter) + extension
+        counter += 1
+
+    print(f'saving model in: {path}')
+    pickle.dump(m, open(path, 'wb'))
+
+
+# -----------------------------------------------------------------------------
+def eval_grid_search(grid, X_test):
+    best_params = grid.best_params_
+    best_model = grid.best_estimator_
+
+    print("Best parameters:")
+    pprint.PrettyPrinter(width=30).pprint(best_params)
+
+    y_pred = best_model.predict(X_test)
+
+    return y_pred
 
 
 def report(
