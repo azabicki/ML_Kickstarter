@@ -89,6 +89,8 @@ def report(
             best_model = model.best_estimator_
             bm_type = str(type(best_model))
 
+            # here i need to match/case different kinds of estimators
+
             print("best parameter:")
             pprint.PrettyPrinter(width=20).pprint(model.best_params_)
 
